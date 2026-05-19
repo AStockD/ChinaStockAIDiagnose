@@ -49,22 +49,6 @@ A successful analysis response includes:
 | `summary` | AI-generated analysis report |
 | `usage` | LLM token usage and billing info |
 
-## Start the Server Locally
-
-```bash
-# Option 1: startup script
-chmod +x start_unified_api.sh
-./start_unified_api.sh
-
-# Option 2: direct launch
-python3 -m uvicorn fastapi_unified:app --host 0.0.0.0 --port 8888
-```
-
-Once running:
-
-- Swagger UI: http://localhost:8888/docs
-- Health check: http://localhost:8888/health
-
 ## Next Steps
 
 - [API Reference](api-reference.md) — all endpoints and parameters
