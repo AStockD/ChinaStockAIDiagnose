@@ -25,6 +25,8 @@ AStockD is an API-first stock analysis engine that understands natural language 
 | AI-Powered Reports | LLM synthesizes features into structured diagnostic reports |
 | AI Agent Ready | Dify, FastGPT, Coze, MCP, OpenClaw out of the box |
 
+📊 [View complete feature reference](docs/features.md) — 300+ features across 8 groups
+
 ---
 
 ## Architecture
@@ -41,7 +43,18 @@ AStockD is an API-first stock analysis engine that understands natural language 
 
 ---
 
-## Quick Start
+## Core API Endpoints
+
+| Endpoint | Description | Usage |
+|----------|-------------|-------|
+| [`POST /analyze/query`](docs/api-reference.md#41-post-analyzequery) | Natural language queries | "帮我看看贵州茅台的最新走势" |
+| [`POST /analyze`](docs/api-reference.md#42-post-analyze) | Smart analysis with stock codes | Explicit stock codes + analysis focus |
+| [`POST /analyze/full`](docs/api-reference.md#43-post-analyzefull) | Full analysis shortcut | All major features in one call |
+| [`GET /analyze/manifest`](docs/api-reference.md#44-get-analyzemanifest) | Feature group catalog | Available feature groups and metadata |
+| [`POST /flow/*`](docs/api-reference.md#5-raw-money-flow-endpoints) | Raw money flow data | Minute-level, daily, combined flow |
+| [`POST /features/*`](docs/api-reference.md#7-ohlcv-feature-endpoints) | OHLCV features | K-patterns, technical indicators |
+
+### Example: Natural Language Query
 
 ```bash
 curl -X POST http://your-server:8888/analyze/query \
@@ -49,45 +62,27 @@ curl -X POST http://your-server:8888/analyze/query \
   -d '{"query": "帮我看看贵州茅台的最新走势"}'
 ```
 
-See [Quick Start Guide](docs/quick-start.md) for setup and Python examples.
+### Example: Stock Code Analysis
+
+```bash
+curl -X POST http://your-server:8888/analyze \
+  -H "Content-Type: application/json" \
+  -d '{
+    "stock_codes": ["600519"],
+    "query": "主力资金动向",
+    "feature_groups": ["technical", "flow_daily"]
+  }'
+```
+
+📋 **Complete API Schema**: [OpenAPI 3.0 Specification](./docs/openapi.yaml) 
 
 ---
 
-## Project Structure
+## AI Agent Integration
 
-```
-AStockD/
-├── docs/                    # Documentation
-│   ├── api-reference.md     # API endpoints
-│   ├── ai-integration.md    # Agent platform integration
-│   ├── features.md          # 300+ feature reference
-│   ├── quick-start.md       # 5-minute guide
-│   └── examples/            # Code samples
-├── skills/
-│   └── stock-analysis/      # OpenClaw agent skill
-├── openapi.yaml             # OpenAPI 3.0 spec
-├── SKILL.md                 # Root skill entry
-├── CHANGELOG.md
-└── CONTRIBUTING.md
-```
+AStockD provides a structured skill definition for AI agent integration:
 
----
-
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Quick Start](docs/quick-start.md) | 5-minute setup and first API call |
-| [API Reference](docs/api-reference.md) | Complete endpoint documentation |
-| [AI Integration Guide](docs/ai-integration.md) | Dify / MCP / OpenClaw / FastGPT / Coze |
-| [Feature Reference](docs/features.md) | 300+ features across 8 groups |
-| [Python Examples](docs/examples/python.md) | Client code samples |
-| [cURL Examples](docs/examples/curl.md) | Command-line samples |
-| [OpenAPI Spec](openapi.yaml) | Machine-readable API schema |
-| [SKILL.md](SKILL.md) | Root skill entry for AI agents |
-| [OpenClaw Skill](skills/stock-analysis/SKILL.md) | Full agent skill definition |
-| [Changelog](CHANGELOG.md) | Version history |
-| [Contributing](CONTRIBUTING.md) | How to contribute |
+**[SKILL.md](./skills/SKILL.md)** - Complete skill definition with examples and usage patterns for AI agents
 
 ---
 

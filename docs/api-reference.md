@@ -691,10 +691,3 @@ AI analysis endpoints include a `usage` field that records LLM token consumption
 
 ---
 
-## 10. Code Examples
-
-See dedicated example pages:
-
-- [Python Examples](examples/python.md)
-- [cURL Examples](examples/curl.md)
-- [AI Integration Guide](ai-integration.md) — platform-specific integration code
