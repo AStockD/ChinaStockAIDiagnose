@@ -147,5 +147,4 @@ curl -s "${ASTOCKD_API_URL}/analyze/manifest"
 ## 相关文档
 
 - [API Reference](../../docs/api-reference.md) — 完整端点说明
-- [AI Integration Guide](../../docs/ai-integration.md) — Dify / MCP / OpenClaw 集成
 - [Feature Reference](../../docs/features.md) — 300+ 特征详解

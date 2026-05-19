@@ -73,16 +73,15 @@ curl -X POST http://your-server:8888/analyze \
     "feature_groups": ["technical", "flow_daily"]
   }'
 ```
-
-📋 **Complete API Schema**: [OpenAPI 3.0 Specification](./docs/openapi.yaml) 
+> [OpenAPI Spec](./docs/openapi.yaml) 
 
 ---
 
-## AI Agent Integration
+## AStockD stock-analysis Skill
 
-AStockD provides a structured skill definition for AI agent integration:
+> Full skill definition: [skills/stock-analysis/SKILL.md](skills/stock-analysis/SKILL.md)
 
-**[SKILL.md](./skills/SKILL.md)** - Complete skill definition with examples and usage patterns for AI agents
+AI agent skill for A-share stock analysis via the AStockD API. Supports natural language queries, multi-turn clarification, and direct feature group selection.
 
 ---
 
