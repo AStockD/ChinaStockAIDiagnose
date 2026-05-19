@@ -77,13 +77,17 @@ AStockD/
 
 | Document | Description |
 |----------|-------------|
-| [Documentation Index](docs/README.md) | Full docs navigation |
 | [Quick Start](docs/quick-start.md) | 5-minute setup and first API call |
 | [API Reference](docs/api-reference.md) | Complete endpoint documentation |
-| [AI Integration Guide](docs/ai-integration.md) | Dify / MCP / OpenClaw / Coze |
+| [AI Integration Guide](docs/ai-integration.md) | Dify / MCP / OpenClaw / FastGPT / Coze |
 | [Feature Reference](docs/features.md) | 300+ features across 8 groups |
+| [Python Examples](docs/examples/python.md) | Client code samples |
+| [cURL Examples](docs/examples/curl.md) | Command-line samples |
 | [OpenAPI Spec](openapi.yaml) | Machine-readable API schema |
+| [SKILL.md](SKILL.md) | Root skill entry for AI agents |
+| [OpenClaw Skill](skills/stock-analysis/SKILL.md) | Full agent skill definition |
 | [Changelog](CHANGELOG.md) | Version history |
+| [Contributing](CONTRIBUTING.md) | How to contribute |
 
 ---
 

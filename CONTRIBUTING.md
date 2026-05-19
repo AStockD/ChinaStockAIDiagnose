@@ -284,7 +284,7 @@ pytest tests/test_analysis.py
 
 - Open an issue with the "question" label
 - Check existing issues and discussions
-- Review the [documentation](docs/)
+- Review the [documentation](README.md#documentation)
 
 ---
 
