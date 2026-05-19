@@ -1,6 +1,16 @@
 # AStockD
 
+<div align="center">
+
 **AI-native A-share stock analysis engine** | AI 原生 A 股分析引擎
+
+![Version](https://img.shields.io/badge/version-0.2.0-blue?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![Python](https://img.shields.io/badge/python-3.8+-blue?style=flat-square)
+![API](https://img.shields.io/badge/API-OpenAPI%203.0-orange?style=flat-square)
+![AI Agent Ready](https://img.shields.io/badge/AI%20Agent-Ready-purple?style=flat-square)
+
+</div>
 
 AStockD is an API-first stock analysis engine that understands natural language — say a stock name, get a full analysis. It combines 300+ financial features with LLM-powered report generation, designed to integrate seamlessly with AI agents and chat platforms.
 
@@ -8,12 +18,12 @@ AStockD is an API-first stock analysis engine that understands natural language 
 
 ## Key Features
 
-- **Natural Language Stock Analysis** — Simply say the stock name (e.g., "贵州茅台") and receive a comprehensive analysis report
-- **300+ Features Across 8 Groups** — Technical indicators (技术指标), money flow (资金流向), K-line patterns (K线形态), fundamental data, sector analysis, sentiment, and more
-- **AI-Powered Report Generation** — LLM synthesizes raw feature data into structured, readable analysis reports (OpenAI-compatible interface)
-- **AI Agent Integration** — Connect to Dify, FastGPT, Coze, MCP, and OpenClaw out of the box
-- **Multi-Turn Conversation** — Context-aware follow-up questions for deeper analysis within a single session
-- **Platform Token Billing** — Built-in metering for SaaS deployment and per-user usage tracking
+| Capability | Description |
+|------------|-------------|
+| Natural Language Interface | Say a stock name, get a full analysis — no complex parameters |
+| 300+ Financial Features | Technical indicators, money flow, K-line patterns, fundamentals |
+| AI-Powered Reports | LLM synthesizes features into structured diagnostic reports |
+| AI Agent Ready | Dify, FastGPT, Coze, MCP, OpenClaw out of the box |
 
 ---
 
@@ -31,17 +41,58 @@ AStockD is an API-first stock analysis engine that understands natural language 
 
 ---
 
+## Quick Start
+
+```bash
+curl -X POST http://your-server:8888/analyze/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "帮我看看贵州茅台的最新走势"}'
+```
+
+See [Quick Start Guide](docs/quick-start.md) for setup and Python examples.
+
+---
+
+## Project Structure
+
+```
+AStockD/
+├── docs/                    # Documentation
+│   ├── api-reference.md     # API endpoints
+│   ├── ai-integration.md    # Agent platform integration
+│   ├── features.md          # 300+ feature reference
+│   ├── quick-start.md       # 5-minute guide
+│   └── examples/            # Code samples
+├── skills/
+│   └── stock-analysis/      # OpenClaw agent skill
+├── openapi.yaml             # OpenAPI 3.0 spec
+├── SKILL.md                 # Root skill entry
+├── CHANGELOG.md
+└── CONTRIBUTING.md
+```
+
+---
+
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [API Reference](api-reference.md) | Complete endpoint documentation |
-| [AI Integration Guide](ai-integration.md) | Connect to Dify / FastGPT / Coze / MCP / OpenClaw |
-| [Feature Reference](features.md) | 300+ features across 8 groups |
+| [Documentation Index](docs/README.md) | Full docs navigation |
+| [Quick Start](docs/quick-start.md) | 5-minute setup and first API call |
+| [API Reference](docs/api-reference.md) | Complete endpoint documentation |
+| [AI Integration Guide](docs/ai-integration.md) | Dify / MCP / OpenClaw / Coze |
+| [Feature Reference](docs/features.md) | 300+ features across 8 groups |
+| [OpenAPI Spec](openapi.yaml) | Machine-readable API schema |
 | [Changelog](CHANGELOG.md) | Version history |
+
+---
+
+## Contributing
+
+We welcome contributions! See [Contributing Guide](CONTRIBUTING.md).
 
 ---
 
 ## License
 
-MIT
+MIT License — see [LICENSE](LICENSE).

@@ -143,3 +143,9 @@ curl -s "${ASTOCKD_API_URL}/analyze/manifest"
 - 股票代码支持格式: "600519"、"SH.600519"、"000858"、"SZ.000858"
 - 市场自动识别: 6开头为沪市(sh)，其他为深市(sz)
 - 盘中数据实时更新，盘后数据缓存时间更长
+
+## 相关文档
+
+- [API Reference](../../docs/api-reference.md) — 完整端点说明
+- [AI Integration Guide](../../docs/ai-integration.md) — Dify / MCP / OpenClaw 集成
+- [Feature Reference](../../docs/features.md) — 300+ 特征详解
