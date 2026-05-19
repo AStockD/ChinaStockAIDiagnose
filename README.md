@@ -5,11 +5,9 @@
 **AI-native A-share stock analysis engine** | AI 原生 A 股分析引擎
 
 ![Version](https://img.shields.io/badge/version-0.2.0-blue?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
-![Python](https://img.shields.io/badge/python-3.8+-blue?style=flat-square)
 ![API](https://img.shields.io/badge/API-OpenAPI%203.0-orange?style=flat-square)
 ![AI Agent Ready](https://img.shields.io/badge/AI%20Agent-Ready-purple?style=flat-square)
-
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 </div>
 
 AStockD is an API-first stock analysis engine that understands natural language — say a stock name, get a full analysis. It combines 300+ financial features with LLM-powered report generation, designed to integrate seamlessly with AI agents and chat platforms.
@@ -48,8 +46,8 @@ AStockD is an API-first stock analysis engine that understands natural language 
 | [`POST /analyze`](docs/api-reference.md#42-post-analyze) | Smart analysis with stock codes | Explicit stock codes + analysis focus |
 | [`POST /analyze/full`](docs/api-reference.md#43-post-analyzefull) | Full analysis shortcut | All major features in one call |
 | [`GET /analyze/manifest`](docs/api-reference.md#44-get-analyzemanifest) | Feature group catalog | Available feature groups and metadata |
-| [`POST /flow/*`](docs/api-reference.md#5-raw-money-flow-endpoints) | Raw money flow data | Minute-level, daily, combined flow |
-| [`POST /features/*`](docs/api-reference.md#7-ohlcv-feature-endpoints) | OHLCV features | K-patterns, technical indicators |
+| [`POST /flow/*`](docs/api-reference.md#51-money-flow-data) | Raw money flow data | Minute-level, daily, combined flow |
+| [`POST /features/*`](docs/api-reference.md#53-ohlcv-features) | OHLCV features | K-patterns, technical indicators |
 
 ### Example: Natural Language Query
 
@@ -75,9 +73,9 @@ curl -X POST http://your-server:8888/analyze \
 
 ## AStockD stock-analysis Skill
 
-> Full skill definition: [skills/stock-analysis/SKILL.md](skills/stock-analysis/SKILL.md)
-
 AI agent skill for A-share stock analysis via the AStockD API. Supports natural language queries, multi-turn clarification, and direct feature group selection.
+
+> Full skill definition: [skills/stock-analysis/SKILL.md](skills/stock-analysis/SKILL.md)
 
 
 ## Contributing
