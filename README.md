@@ -14,7 +14,6 @@
 
 AStockD is an API-first stock analysis engine that understands natural language — say a stock name, get a full analysis. It combines 300+ financial features with LLM-powered report generation, designed to integrate seamlessly with AI agents and chat platforms.
 
----
 
 ## Key Features
 
@@ -27,7 +26,6 @@ AStockD is an API-first stock analysis engine that understands natural language 
 
 📊 [View complete feature reference](docs/features.md) — 300+ features across 8 groups
 
----
 
 ## Architecture
 
@@ -41,7 +39,6 @@ AStockD is an API-first stock analysis engine that understands natural language 
                OpenClaw         Generation
 ```
 
----
 
 ## Core API Endpoints
 
@@ -75,7 +72,6 @@ curl -X POST http://your-server:8888/analyze \
 ```
 > [OpenAPI Spec](./docs/openapi.yaml) 
 
----
 
 ## AStockD stock-analysis Skill
 
@@ -83,13 +79,11 @@ curl -X POST http://your-server:8888/analyze \
 
 AI agent skill for A-share stock analysis via the AStockD API. Supports natural language queries, multi-turn clarification, and direct feature group selection.
 
----
 
 ## Contributing
 
 We welcome contributions! See [Contributing Guide](CONTRIBUTING.md).
 
----
 
 ## License
 

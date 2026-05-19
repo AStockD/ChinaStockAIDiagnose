@@ -6,7 +6,7 @@ metadata: {"openclaw": {"requires": {"bins": ["curl"], "env": ["ASTOCKD_API_URL"
 
 # A股智能分析 Skill
 
-分析A股股票的技术面、资金流、K线形态等特征。支持自然语言查询和结构化指定。
+分析A股股票的技术面、资金流、K线形态等特征，提供 300+ 特征的综合分析。支持自然语言查询和结构化指定。
 
 ## 使用场景
 
@@ -75,14 +75,14 @@ curl -s -X POST "${ASTOCKD_API_URL}/analyze" \
 ```
 
 **可用特征组**:
-- `k_patterns`: K线形态特征（吞没/十字星/锤子线等20+形态）
-- `lifeline`: 生死线指标（红蓝带/买卖点信号）
-- `experience`: 经验特征（价格变动/成交量趋势）
-- `ohlcv_combined`: OHLCV综合（K形态+生死线+经验，42特征）
-- `technical`: 技术指标（RSI/MACD/KDJ/布林等212特征）
-- `flow_minute`: 分钟资金流（早盘/尾盘/洗盘等16特征）
-- `flow_daily`: 日线资金流（MFS/MFI/主力等64特征）
-- `flow_combined`: 综合资金流（分钟+日线80特征）
+- `k_patterns`: K线形态（18特征）—— 早晨之星、黄昏之星、阳包阴、阴包阳、锤头、吊颈、红三兵、黑三鸦等经典反转/持续形态
+- `lifeline`: 生死线指标（7特征）—— 红蓝带、三色球、绝对买点、相对买点、自杀买点警告、日线卖出信号、蓝带卖出信号
+- `experience`: 经验特征（4特征）—— 当前价格、涨跌幅、成交量趋势等基础行情数据
+- `ohlcv_combined`: OHLCV综合（42特征）—— K线形态 + 生死线 + 经验特征的完整组合
+- `technical`: 技术指标（212特征）—— RSI/MACD/KDJ/布林/CCI/ROC/ADX/OBV/斐波那契/FVG缺口等，包含60分钟和日线多时间周期指标
+- `flow_minute`: 分钟资金流（16特征）—— 早盘30分净流入、尾盘30分净流入、日内吸筹、日内出货、资金流转正时刻、洗盘检测等
+- `flow_daily`: 日线资金流（64特征）—— MFS主力流向、MFI资金强度、MFCS资金周期、主力净流入MA、资金流动量MACD、流入流出背离等
+- `flow_combined`: 综合资金流（80特征）—— 分钟级 + 日线级资金流的完整组合分析
 
 ### 4. 全量快捷分析
 
@@ -102,47 +102,143 @@ curl -s -X POST "${ASTOCKD_API_URL}/analyze/full" \
 curl -s "${ASTOCKD_API_URL}/analyze/manifest"
 ```
 
-## 关键词 → 特征组映射
+## 特征体系总览
+
+AStockD 特征系统由 **8 大特征组** 组成，总计约 **339 个特征**：
+
+| 特征组 | 特征数 | 数据源 | 核心功能 |
+|--------|--------|--------|----------|
+| `k_patterns` | 18 | 日线OHLCV | 经典K线形态识别（反转/持续形态） |
+| `lifeline` | 7 | 日线OHLCV | 生死线买卖点系统（红蓝带/三色球） |
+| `experience` | 4 | 日线OHLCV | 基础行情数据 |
+| `ohlcv_combined` | 42 | 日线OHLCV | K线+生死线+经验完整组合 |
+| `technical` | 212 | 60分钟OHLCV | 多周期技术指标（RSI/MACD/KDJ/布林/斐波那契等） |
+| `flow_minute` | 16 | 分钟资金流 | 盘中资金流向（早盘/尾盘/吸筹/出货） |
+| `flow_daily` | 64 | 日线资金流 | 主力资金分析（MFS/MFI/MFCS/背离） |
+| `flow_combined` | 80 | 分钟+日线资金流 | 综合资金流分析 |
+
+### 关键词 → 特征组映射
 
 当需要自行判断特征组时，参考以下映射：
 
 | 关键词 | 特征组 |
 |--------|--------|
-| 技术指标/RSI/MACD/KDJ/布林/动量 | technical |
-| 主力/大单/散户/资金流/MFS/MFI | flow_daily |
-| K线/形态/吞没/十字星/反转 | k_patterns 或 ohlcv_combined |
-| 生死线/红蓝带/买卖点 | lifeline 或 ohlcv_combined |
-| 分钟/早盘/尾盘/洗盘 | flow_minute |
-| 买卖/涨跌/看多看空 | technical + flow_daily |
+| 技术指标/RSI/MACD/KDJ/布林/CCI/ROC/动量/ADX | technical |
+| 主力/大单/散户/资金流/MFS/MFI/MFCS/资金流动量 | flow_daily |
+| K线/形态/吞没/十字星/锤头/反转/持续 | k_patterns 或 ohlcv_combined |
+| 生死线/红蓝带/三色球/买卖点/金葫芦 | lifeline 或 ohlcv_combined |
+| 分钟/早盘/尾盘/洗盘/吸筹/出货 | flow_minute |
+| 斐波那契/FVG缺口/Z-score | technical |
+| 背离/趋势/周期 | flow_daily 或 technical |
+| 买卖/涨跌/看多看空/综合分析 | technical + flow_daily + ohlcv_combined |
 
 ## 结果解读
 
+### 分析报告结构
+
 分析结果中 `report` 包含结构化分析报告，包含以下章节：
-- 综合诊断：趋势方向 + 情绪指标(-10~+10可视化条) + 关键支撑/阻力 + 风险收益比 + 资金面 + 技术面 + K线形态 + 资讯面 + 积极信号/消极信号
-- 趋势信号解读：按技术指标/资金流/生死线分类展示看涨看跌信号
-- 知识库信号：看涨/看跌各top3高概率规则及指标条件
-- 风险提示
 
-`usage` 字段记录 LLM 用量：
-- `actual_tokens`: 实际消耗的 token 总数
-- `platform_tokens`: 对外展示的处理后 token 数（含系数调整）
-- `platform_prompt_tokens`: 处理后的 prompt tokens
-- `platform_completion_tokens`: 处理后的 completion tokens
-- `total_cost_cny`: 费用（人民币）
-- `details`: 每次LLM调用明细（model/purpose/tokens/cost）
+1. **综合诊断**：
+   - 趋势方向（上升/下降/震荡）
+   - 情绪指标（-10~+10 可视化条形图）
+   - 关键支撑位/阻力位
+   - 风险收益比
+   - 资金面分析（主力/散户行为）
+   - 技术面分析（多周期指标状态）
+   - K线形态特征
+   - 资讯面（可选）
+   - 积极信号/消极信号汇总
 
-**Platform 计费规则**:
-- 股票报告: actual < 5000 取 5000~6000 区间，再 × 1.25
-- 其他: actual × 1.3（最低100）
+2. **趋势信号解读**：
+   - 按技术指标分类（RSI/MACD/KDJ/布林带等）
+   - 按资金流分类（主力流向/散户情绪）
+   - 按生死线分类（红蓝带/买卖点）
+   - 展示看涨/看跌信号及强度
 
-`disclaimer` 为顶层字段，仅在响应中出现一次。
+3. **知识库信号**：
+   - 看涨信号 Top 3（高概率规则 + 指标条件）
+   - 看跌信号 Top 3（高概率规则 + 指标条件）
+   - 历史成功率参考
+
+4. **风险提示**：
+   - 市场风险警示
+   - 技术面风险点
+   - 资金面风险点
+
+### 情绪指标 (sentiment)
+
+```json
+{
+  "score": 5,           // -10 到 +10 的情绪评分
+  "label": "偏多",      // 文字标签
+  "bar": "[-----=====]" // 可视化条形图
+}
+```
+
+**评分解读**：
+- **+7 ~ +10**：极度看涨
+- **+4 ~ +6**：偏多
+- **-3 ~ +3**：中性震荡
+- **-6 ~ -4**：偏空
+- **-10 ~ -7**：极度看跌
+
+### 用量统计 (usage)
+
+`usage` 字段记录 LLM token 消耗和费用：
+
+```json
+{
+  "llm": {
+    "actual_tokens": 6200,              // 实际消耗的 token 总数
+    "platform_tokens": 7750,            // 对外展示的处理后 token 数（含系数调整）
+    "platform_prompt_tokens": 3375,     // 处理后的 prompt tokens
+    "platform_completion_tokens": 4375, // 处理后的 completion tokens
+    "total_cost_cny": 0.05,             // 费用（人民币）
+    "details": [                        // 每次 LLM 调用明细
+      {
+        "model": "deepseek-chat",
+        "purpose": "stock_report",
+        "tokens": 6200,
+        "cost_cny": 0.05
+      }
+    ]
+  }
+}
+```
+
+**Platform 计费规则**：
+- **股票报告**：actual_tokens < 5000 时取 5000~6000 区间，再 × 1.25
+- **其他类型**：actual_tokens × 1.3（最低 100 tokens）
+- **费用计算**：基于 DeepSeek API 定价标准
+
+### 免责声明 (disclaimer)
+
+`disclaimer` 为顶层字段，仅在响应中出现一次，提醒用户投资风险。
 
 ## 注意事项
 
-- 查询字符数限制: 最长120个中文字符
-- 股票代码支持格式: "600519"、"SH.600519"、"000858"、"SZ.000858"
-- 市场自动识别: 6开头为沪市(sh)，其他为深市(sz)
-- 盘中数据实时更新，盘后数据缓存时间更长
+### 输入限制
+- **查询字符数限制**：最长 120 个中文字符
+- **股票代码支持格式**：
+  - 纯数字：`"600519"`、`"000858"`
+  - 带市场前缀：`"SH.600519"`、`"SZ.000858"`
+- **市场自动识别**：6开头为沪市(SH)，其他为深市(SZ)
+
+### 数据更新
+- **盘中数据**：实时更新（分钟级资金流、60分钟技术指标）
+- **盘后数据**：缓存时间更长，依赖交易所收盘结算
+- **日线数据**：默认获取 300 条（可通过 `ohlcv_count` 调整）
+- **60分钟数据**：默认获取 800 条（可通过 `technical_count` 调整）
+
+### 多轮对话
+- **session_id**：用于多轮对话上下文保持
+- **skip_clarification**：默认 `true`（AI Agent 推荐），意图模糊时自动选择全面分析
+- **selected_option**：用户选择的选项索引，配合 `session_id` 使用
+
+### 性能建议
+- **全量分析**：使用 `/analyze/full` 端点，一次性获取 technical + flow_daily + ohlcv_combined
+- **指定特征组**：明确需求时直接指定 `feature_groups`，跳过推理步骤
+- **自然语言查询**：最灵活，适合用户不确定需求或需要智能识别股票
 
 ## 相关文档
 
