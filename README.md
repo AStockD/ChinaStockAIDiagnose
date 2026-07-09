@@ -146,7 +146,7 @@ print(resp.json())
 
 也可扫码下载：
 
-![Android 下载二维码](assets/android-download-qr.png)
+![Android 下载二维码](./assets/android-app-qr.png)
 
 ## 参考链接
 1. [A股道官网](https://www.astockd.com)
